@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.content {
+  --gap: 1rem;
+  display: flex;
+  flex-flow: row wrap;
+  gap: var(--gap);
+  width: 95%;
+  justify-content: center;
+}
+
+.search-box {
+  flex: 1 1 100%;
+}
+
+.tittle-spacer {
+  flex: 1 1 auto;
+}
+
+.field-full-width {
+  width: 100%;
+}
+
+.button-container {
+  flex: 0 0 100%;
+}
+
+.load-more-button {
+  background-color: #30a7d7;
+  width: 100%;
+}
+
+.list-card {
+  flex: 1 1 calc(25% - var(--gap));
+}

@@ -1,0 +1,104 @@
+@if (pokemonData) {
+  <mat-card class="main-card">
+    <mat-card-header>
+      <mat-card-title-group>
+        <button mat-icon-button (click)="clearPokemonData.emit()">
+          <mat-icon fontIcon="arrow_back"></mat-icon>
+        </button>
+        <mat-card-title>
+          {{ pokemonData.name | titlecase }} Nº {{ pokemonData.order }}
+        </mat-card-title>
+        <mat-card-subtitle>
+          <mat-chip-set>
+            @for (type of pokemonData.types; track type.slot) {
+              <mat-chip>{{ type.type.name }}</mat-chip>
+            }
+          </mat-chip-set>
+        </mat-card-subtitle>
+        <img
+          mat-card-xl-image
+          src="{{ pokemonData.sprites.front_default }}"
+          alt="sprite of {{ pokemonData.name }}" />
+      </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-content>
+      <div [ngClass]="mainContainerClass">
+        <mat-card class="content-card__main">
+          <mat-card-content>
+            <div class="card-container__main">
+              <div class="card-container">
+                <div class="mat-h2">Height</div>
+                <div class="mat-body-1">
+                  {{ pokemonData.height | unityConverter: 'DM-M' }} m
+                </div>
+                <div class="mat-h2">Weight</div>
+                <div class="mat-body-1">
+                  {{ pokemonData.weight | unityConverter: 'HG-KG' }} kg
+                </div>
+                <div class="mat-h2">Abilities</div>
+                @for (ability of pokemonData.abilities; track ability.slot) {
+                  <div class="mat-body-1">
+                    {{ ability.ability.name | titlecase }}
+                  </div>
+                }
+              </div>
+              <div class="card-container">
+                <div class="mat-h2">Forms</div>
+                @for (form of pokemonData.forms; track form.name) {
+                  <div class="mat-body-1">{{ form.name | titlecase }}</div>
+                }
+                <div class="mat-h2">Species</div>
+                <div class="mat-body-1">
+                  {{ pokemonData.species.name | titlecase }}
+                </div>
+
+                <div class="mat-h2">Held Itens</div>
+                @for (
+                  heldItem of pokemonData.held_items;
+                  track heldItem.item.name
+                ) {
+                  <div class="mat-body-1">{{ heldItem.item.name }}</div>
+                }
+                @if (pokemonData.held_items.length === 0) {
+                  <div class="mat-body-1">None</div>
+                }
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <mat-card class="content-card">
+          <mat-card-header
+            ><mat-card-title>Stats</mat-card-title></mat-card-header
+          >
+          <mat-card-content>
+            <div class="card-container">
+              @for (stat of pokemonData.stats; track stat.stat.name) {
+                <div class="mat-h2">
+                  {{ stat.stat.name | titlecase }}: {{ stat.base_stat }}
+                </div>
+                <mat-progress-bar
+                  mode="determinate"
+                  value="{{ stat.base_stat | statPercent }}"></mat-progress-bar>
+              }
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <mat-card class="content-card">
+          <mat-card-header>
+            <mat-card-title>Moves</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="card-container__moves">
+              @for (move of pokemonData.moves; track move.move.name) {
+                <div class="move-name mat-body-1">
+                  <mat-icon fontIcon="circle" class="move-icon"></mat-icon>
+                  {{ move.move.name | titlecase }}
+                </div>
+              }
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-card-content>
+  </mat-card>
+}

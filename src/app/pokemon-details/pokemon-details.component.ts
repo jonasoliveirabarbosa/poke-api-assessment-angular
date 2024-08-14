@@ -1,7 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { PokemonDetails } from './pokemon.interface';
-import { Observable } from 'rxjs';
-import { PokedexService } from '../pokedex/pokedex.service';
 import { AsyncPipe, CommonModule, NgClass } from '@angular/common';
 import {
   MatCardContent,
@@ -43,15 +41,14 @@ import { MatButtonModule } from '@angular/material/button';
     NgClass,
     MatButtonModule,
   ],
-  inputs: ['pokemonData'],
   templateUrl: './pokemon-details.component.html',
   styleUrl: './pokemon-details.component.scss',
 })
-export class PokemonDetailsComponent {
+export class PokemonDetailsComponent implements OnInit {
   @Input({ required: true }) pokemonData: PokemonDetails | null = null;
   @Output() clearPokemonData = new EventEmitter<void>();
 
-  currentBreakpoint: string = '';
+  currentBreakpoint = '';
   mainContainerClass: object = {
     'main-card': true,
   };
